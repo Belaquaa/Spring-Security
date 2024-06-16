@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px 30px;
+            background-color: #eef2f7;
+            color: #333;
+            font-size: 18px;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+            font-weight: 300;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        input[type="text"], input[type="number"], input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .btn-submit {
+            margin-top: 30px;
+            padding: 14px 28px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<h1>Add User</h1>
+
+<form th:action="@{/users/add}" th:object="${user}" method="post">
+    <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" th:field="*{name}" required />
+    </div>
+    <div>
+        <label for="age">Age</label>
+        <input type="number" id="age" th:field="*{age}" required />
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" th:field="*{email}" required />
+    </div>
+    <div>
+        <button type="submit" class="btn-submit">Save</button>
+    </div>
+</form>
+
+</body>
+</html>

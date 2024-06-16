@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error - User Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px 30px;
+            background-color: #eef2f7;
+            color: #333;
+            font-size: 18px;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+            font-weight: 300;
+            font-size: 32px;
+            margin-top: 100px;
+        }
+        .error-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            color: #dc3545;
+        }
+        .back-link {
+            display: block;
+            width: 220px;
+            margin: 20px auto;
+            padding: 14px 28px;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .back-link:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<h1>User Management</h1>
+<p class="error-message" th:text="${errorMessage}">Oops! Something went wrong.</p>
+<a href="/users" class="back-link">Go Back to Home</a>
+
+</body>
+</html>
