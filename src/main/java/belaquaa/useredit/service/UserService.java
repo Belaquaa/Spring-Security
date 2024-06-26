@@ -1,6 +1,8 @@
 package belaquaa.useredit.service;
 
+import belaquaa.useredit.model.Role;
 import belaquaa.useredit.model.User;
+import belaquaa.useredit.repository.RoleRepository;
 import belaquaa.useredit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,12 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userDao;
+    private final RoleRepository roleDao;
 
     @Transactional
     public void addUser(User user) {
+        Role userRole = roleDao.findByRole("user").orElseThrow(() -> new RuntimeException("Role 'user' not found"));
+        user.getRoles().add(userRole);
         userDao.save(user);
     }
 
@@ -35,6 +40,7 @@ public class UserService {
         existingUser.setName(updatedUser.getName());
         existingUser.setAge(updatedUser.getAge());
         existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setRoles(updatedUser.getRoles());
         userDao.save(existingUser);
     }
 
@@ -42,5 +48,33 @@ public class UserService {
     public void deleteUser(Long id) {
         userDao.deleteById(id);
     }
+
+    @Transactional
+    public void addRoleToUser(Long userId, Long roleId) {
+        User user = userDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Role role = roleDao.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+        user.getRoles().add(role);
+        userDao.save(user);
+    }
+
+    @Transactional
+    public void removeRoleFromUser(Long userId, Long roleId) {
+        User user = userDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Role role = roleDao.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+        user.getRoles().remove(role);
+        userDao.save(user);
+    }
+
+    @Transactional
+    public void addRole(String roleName) {
+        Role role = Role.builder().role(roleName).build();
+        roleDao.save(role);
+    }
+
+    @Transactional(readOnly = true)
+    public Role findRoleByName(String roleName) {
+        return roleDao.findByRole(roleName).orElse(null);
+    }
 }
+
 
