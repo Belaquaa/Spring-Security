@@ -5,6 +5,11 @@ import belaquaa.useredit.model.User;
 import belaquaa.useredit.repository.RoleRepository;
 import belaquaa.useredit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +24,9 @@ public class UserService {
 
     @Transactional
     public void addUser(User user) {
-        Role userRole = roleDao.findByRole("user").orElseThrow(() -> new RuntimeException("Role 'user' not found"));
+        Role userRole = roleDao.findByRole("ROLE_USER").orElseThrow(() -> new RuntimeException("Role 'user' not found"));
         user.getRoles().add(userRole);
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userDao.save(user);
     }
 
@@ -34,16 +40,23 @@ public class UserService {
         return userDao.findById(id).orElse(null);
     }
 
+    @Transactional(readOnly = true)
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email).orElse(null);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
     public void updateUser(Long id, User updatedUser) {
         User existingUser = userDao.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        existingUser.setName(updatedUser.getName());
+        existingUser.setUsername(updatedUser.getUsername());
         existingUser.setAge(updatedUser.getAge());
         existingUser.setEmail(updatedUser.getEmail());
         existingUser.setRoles(updatedUser.getRoles());
         userDao.save(existingUser);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
     public void deleteUser(Long id) {
         userDao.deleteUserRolesByUserId(id);

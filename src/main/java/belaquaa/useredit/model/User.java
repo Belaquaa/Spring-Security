@@ -30,8 +30,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "username", nullable = false)
+    private String username;
 
     @Column(name = "age", nullable = false)
     private Integer age;
@@ -42,7 +42,7 @@ public class User {
     @Column(name = "password", nullable = true)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

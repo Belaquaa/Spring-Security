@@ -18,6 +18,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public String handleException(HttpServletRequest request, Exception ex, Model model) {
         model.addAttribute("errorMessage", "An unexpected error occurred. Please try again later.");
+        System.out.println(ex.getMessage());
         return "error";
     }
 }
