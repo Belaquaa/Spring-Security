@@ -5,10 +5,6 @@ import belaquaa.useredit.model.User;
 import belaquaa.useredit.repository.RoleRepository;
 import belaquaa.useredit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +41,6 @@ public class UserService {
         return userDao.findByEmail(email).orElse(null);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
     public void updateUser(Long id, User updatedUser) {
         User existingUser = userDao.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
@@ -56,7 +51,6 @@ public class UserService {
         userDao.save(existingUser);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
     public void deleteUser(Long id) {
         userDao.deleteUserRolesByUserId(id);
