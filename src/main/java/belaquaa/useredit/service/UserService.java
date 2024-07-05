@@ -47,7 +47,6 @@ public class UserService {
         existingUser.setUsername(updatedUser.getUsername());
         existingUser.setAge(updatedUser.getAge());
         existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setRoles(updatedUser.getRoles());
         userDao.save(existingUser);
     }
 

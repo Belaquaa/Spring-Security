@@ -70,6 +70,7 @@
     </style>
 </head>
 <body>
+
 <h1>Login</h1>
 <form th:action="@{/login}" method="post">
     <div th:if="${errorMessage != null}" class="error-message" th:text="${errorMessage}"></div>
@@ -88,5 +89,6 @@
         <button type="button" class="register-button" onclick="location.href='/register'">Register</button>
     </div>
 </form>
+
 </body>
 </html>

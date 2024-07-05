@@ -3,10 +3,12 @@ package belaquaa.useredit.controller;
 import belaquaa.useredit.model.Role;
 import belaquaa.useredit.model.User;
 import belaquaa.useredit.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,7 +44,10 @@ public class ViewController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/edit/{id}")
-    public String editUser(@PathVariable Long id, @ModelAttribute User user) {
+    public String editUser(@PathVariable Long id, @Valid @ModelAttribute User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit-user";
+        }
         userService.updateUser(id, user);
         return "redirect:/users";
     }
@@ -56,7 +61,10 @@ public class ViewController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
-    public String addUser(@ModelAttribute User user) {
+    public String addUser(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "add-user";
+        }
         userService.addUser(user);
         return "redirect:/users";
     }
@@ -80,5 +88,4 @@ public class ViewController {
         return "user-profile";
     }
 }
-
 

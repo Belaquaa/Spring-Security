@@ -8,25 +8,18 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @RequiredArgsConstructor
 public class UserDataInitializer {
 
-    private UserService userService;
+    private final UserService userService;
 
     @PostConstruct
-    public void init() {
-        createUsers();
-    }
-
-    public void createUsers() {
-        // Добавление ролей
+    private void initializeData() {
         for (Roles role : Roles.values()) {
             userService.addRole(role.name());
         }
 
-        // Создание пользователей
         User vlad = User.builder()
                 .username("Vlad")
                 .age(22)
@@ -59,7 +52,6 @@ public class UserDataInitializer {
                 .build();
         userService.addUser(test);
 
-        // Добавление ролей к пользователям
         Role adminRole = userService.findRoleByName("ROLE_ADMIN");
         Role testerRole = userService.findRoleByName("ROLE_TESTER");
 

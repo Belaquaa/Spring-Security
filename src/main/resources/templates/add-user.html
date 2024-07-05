@@ -68,18 +68,22 @@
     <div>
         <label for="username">Username</label>
         <input type="text" id="username" th:field="*{username}" required />
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
     </div>
     <div>
         <label for="age">Age</label>
         <input type="number" id="age" th:field="*{age}" required />
+        <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</div>
     </div>
     <div>
         <label for="email">Email</label>
         <input type="email" id="email" th:field="*{email}" required />
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     </div>
     <div>
         <label for="password">Password</label>
         <input type="password" id="password" th:field="*{password}" required />
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     </div>
     <div>
         <button type="submit" class="btn-submit">Save</button>
