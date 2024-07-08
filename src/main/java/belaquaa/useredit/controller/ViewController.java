@@ -30,7 +30,7 @@ public class ViewController {
 
     @GetMapping
     public String getUsers(Model model) {
-        model.addAttribute("users", userService.listUsers());
+        model.addAttribute("users", userService.findAllUsers());
         return "users";
     }
 

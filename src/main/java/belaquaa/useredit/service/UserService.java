@@ -1,5 +1,7 @@
 package belaquaa.useredit.service;
 
+import belaquaa.useredit.exception.UserNotFoundException;
+import belaquaa.useredit.exception.RoleNotFoundException;
 import belaquaa.useredit.model.Role;
 import belaquaa.useredit.model.User;
 import belaquaa.useredit.repository.RoleRepository;
@@ -15,72 +17,72 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userDao;
-    private final RoleRepository roleDao;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Transactional
     public void addUser(User user) {
-        Role userRole = roleDao.findByRole("ROLE_USER").orElseThrow(() -> new RuntimeException("Role 'user' not found"));
+        Role userRole = roleRepository.findByRole("ROLE_USER").orElseThrow(() -> new RoleNotFoundException("Role 'user' not found"));
         user.getRoles().add(userRole);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userDao.save(user);
+        userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
-    public List<User> listUsers() {
-        return userDao.findAll();
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     public User findById(Long id) {
-        return userDao.findById(id).orElse(null);
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Transactional(readOnly = true)
     public User findByEmail(String email) {
-        return userDao.findByEmail(email).orElse(null);
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Transactional
     public void updateUser(Long id, User updatedUser) {
-        User existingUser = userDao.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
         existingUser.setUsername(updatedUser.getUsername());
         existingUser.setAge(updatedUser.getAge());
         existingUser.setEmail(updatedUser.getEmail());
-        userDao.save(existingUser);
+        userRepository.save(existingUser);
     }
 
     @Transactional
     public void deleteUser(Long id) {
-        userDao.deleteUserRolesByUserId(id);
-        userDao.deleteById(id);
+        userRepository.deleteUserRolesByUserId(id);
+        userRepository.deleteById(id);
     }
 
     @Transactional
     public void addRoleToUser(Long userId, Long roleId) {
-        User user = userDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        Role role = roleDao.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new RoleNotFoundException("Role not found"));
         user.getRoles().add(role);
-        userDao.save(user);
+        userRepository.save(user);
     }
 
     @Transactional
     public void removeRoleFromUser(Long userId, Long roleId) {
-        User user = userDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        Role role = roleDao.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new RoleNotFoundException("Role not found"));
         user.getRoles().remove(role);
-        userDao.save(user);
+        userRepository.save(user);
     }
 
     @Transactional
     public void addRole(String roleName) {
         Role role = Role.builder().role(roleName).build();
-        roleDao.save(role);
+        roleRepository.save(role);
     }
 
     @Transactional(readOnly = true)
     public Role findRoleByName(String roleName) {
-        return roleDao.findByRole(roleName).orElse(null);
+        return roleRepository.findByRole(roleName).orElseThrow(() -> new RoleNotFoundException("Role not found"));
     }
 }
 
