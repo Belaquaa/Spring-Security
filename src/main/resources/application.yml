@@ -14,11 +14,11 @@ spring:
 vk:
   -api:
     -version: 5.131
-    -access-token: vk1.a.dC-dHkkKlt6igL3HOJyrFsG5E7fN5mEetAiDFfvpmh5AdJmn4vWyKmjrBf9NntBLQPplk-DzKTOTnM46OlU1akpjGbVNow6wIHRyLnMs2FWgmKuETgNe7Pu8runxeaixQ0Jlel_oxvzxsTcE1oihtDlPb5x6Ln8-9eqOsk0VjTmMz2uB1WJTr3dL4qTxQE2gdVfFEnzw-aAw-BejwKrkqQ
-    -group-id: 1234567890
+    # Может потребоваться обновление токена! С помощью токена возможно управлять аккаунтом. Срок жизни = 1 час
+    # Получить: https://vkhost.github.io/
+    -access-token: token
 
 default:
   profile:
     picture:
       url: https://cdn.pixabay.com/photo/2023/10/03/10/49/anonymous-8291223_1280.png
-      local: /static/favicon.ico
