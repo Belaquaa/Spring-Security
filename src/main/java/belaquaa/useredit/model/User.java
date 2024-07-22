@@ -62,4 +62,8 @@ public class User {
     )
     @Builder.Default
     private Set<Role> roles = new HashSet<>();
+
+    @Size(max = 1000)
+    @Column(name = "profile_picture_url", nullable = true, length = 1000)
+    private String profilePictureUrl;
 }

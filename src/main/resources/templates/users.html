@@ -148,6 +148,13 @@
             height: 40px;
             cursor: pointer;
         }
+        .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -161,6 +168,7 @@
 <table>
     <thead>
     <tr>
+        <th>Profile</th>
         <th>Name</th>
         <th>Age</th>
         <th>Email</th>
@@ -170,7 +178,8 @@
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
-        <td th:text="${user.getUsername}"></td>
+        <td><img th:src="${user.profilePictureUrl}" alt="Profile Picture" class="profile-picture"></td>
+        <td th:text="${user.username}"></td>
         <td th:text="${user.age}"></td>
         <td th:text="${user.email}"></td>
         <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">

@@ -26,6 +26,15 @@
             font-weight: 300;
             font-size: 32px;
         }
+        .profile-picture {
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
         .profile-details {
             margin-top: 20px;
         }
@@ -64,6 +73,7 @@
 
 <div class="profile-container">
     <h1>User Profile</h1>
+    <img th:src="${user.profilePictureUrl}" alt="Profile Picture" class="profile-picture">
     <dl class="profile-details">
         <dt>Username:</dt>
         <dd th:text="${user.username}"></dd>
