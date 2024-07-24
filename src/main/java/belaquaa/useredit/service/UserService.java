@@ -113,21 +113,8 @@ public class UserService {
                 .orElse(DEFAULT_PROFILE_PICTURE_URL);
     }
 
-
     private void setProfilePictureUrlBasedOnUsername(User user) {
         String profilePictureUrl = generateProfilePictureUrl(user.getUsername());
         user.setProfilePictureUrl(profilePictureUrl);
     }
-
-    @Transactional
-    public void updateUserProfilePicture(Long userId, String profilePictureUrl) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
-        if (profilePictureUrl == null) {
-            profilePictureUrl = DEFAULT_PROFILE_PICTURE_URL;
-        }
-        user.setProfilePictureUrl(profilePictureUrl);
-        userRepository.save(user);
-    }
 }
-

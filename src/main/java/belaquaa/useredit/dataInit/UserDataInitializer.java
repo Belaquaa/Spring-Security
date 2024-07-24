@@ -4,7 +4,6 @@ import belaquaa.useredit.model.Role;
 import belaquaa.useredit.model.Roles;
 import belaquaa.useredit.model.User;
 import belaquaa.useredit.service.UserService;
-import belaquaa.useredit.vkapi.VkApiService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,9 +21,9 @@ public class UserDataInitializer {
         }
 
         createUser("Vlad", 22, "vladdosiik@mail.ru", "123a");
-        createUser("1aa", 19, "eee_pokkk@mail.ru", "123");
+        createUser("Belaquaa", 19, "eee_pokkk@mail.ru", "123");
         createUser("Geralt", 38, "just.fun.now228@gmail.com", "123");
-        createUser("фss", 11, "vovandrelo@mail.ru", "test");
+        createUser("NaN1", 11, "vovandrelo@mail.ru", "test");
 
         User vlad = userService.findByEmail("vladdosiik@mail.ru");
         User geralt = userService.findByEmail("just.fun.now228@gmail.com");

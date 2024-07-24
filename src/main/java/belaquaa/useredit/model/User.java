@@ -51,7 +51,7 @@ public class User {
     private String email;
 
     @Size(min = 3, message = "Password must be at least 3 characters")
-    @Column(name = "password", nullable = true)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -64,6 +64,6 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @Size(max = 1000)
-    @Column(name = "profile_picture_url", nullable = true, length = 1000)
+    @Column(name = "profile_picture_url", length = 1000)
     private String profilePictureUrl;
 }

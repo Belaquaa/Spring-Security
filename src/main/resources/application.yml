@@ -1,10 +1,10 @@
 spring:
-  -application.name: Project
-  -datasource:
-    -url: jdbc:postgresql://localhost:5432/postgres
-    -username: postgres
-    -password: root
-    -driver-class-name: org.postgresql.Driver
+  application.name: Project
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
@@ -12,11 +12,11 @@ spring:
     show-sql: false
 
 vk:
-  -api:
+  api:
     -version: 5.131
     # Может потребоваться обновление токена! С помощью токена возможно управлять аккаунтом. Срок жизни = 1 час
     # Получить: https://vkhost.github.io/
-    -access-token: token
+    access-token: token
 
 default:
   profile:
